@@ -1,0 +1,25 @@
+{
+  "name": "pokergamenode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamMC35/PokerGameNode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SamMC35/PokerGameNode/issues"
+  },
+  "homepage": "https://github.com/SamMC35/PokerGameNode#readme",
+  "description": "",
+  "dependencies": {
+    "array-shuffle": "^3.0.0",
+    "enum": "^3.0.4",
+    "express": "^5.1.0",
+    "random": "^5.4.1"
+  }
+}
