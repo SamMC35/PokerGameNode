@@ -1,29 +1,30 @@
+import Card from '../entities/card.js';
+import SUIT from '../entities/suit.js';
 import RANK from '../entities/rank.js'
 import HAND from '../entities/hand.js'
+
+import { initDeck, shuffleDeck, returnOneCard } from './deckService.js';
 
 import { sort } from 'fast-sort';
 
 export function calculateHand(decks) {
-  var deckRanks = decks.map((item) => {
-    item.rank
-  })
-
-  deckRanks = sort(deckRanks).asc();
-
   //Check straight flush & royal flush
-
-  if (checkStraight(decks) && checkFlush(decks)) {
-    if (deckRanks[0] == RANK.TEN) {
+  if (decks.length != 5) {
+    log.error("Not 5");
+    return;
+  }
+  if (checkStraight(decks)/* && checkFlush(decks)*/) {
+    /*if (deckRanks[0] == RANK.TEN) {
       return HAND.ROYAL_FLUSH;
-    } else {
-      return HAND.STRAIGHT_FLUSH;
-    }
+    } else {*/
+    return HAND.STRAIGHT_FLUSH;
+    //}
   }
 
   //Check flush 
-  if (checkFlush(decks)) {
+  /*if (checkFlush(decks)) {
     return HAND.FLUSH;
-  }
+  }*/
 
   //check straight 
   if (checkStraight(decks)) {
@@ -49,6 +50,14 @@ export function calculateHand(decks) {
 
 function checkStraight(decks) {
 
+  var deckRanks = decks.map((item) => {
+    item.rank
+  })
+
+  deckRanks = sort(deckRanks).asc();
+
+
+
   for (let i = 0; i < deckRanks.length - 1; i++) {
     if (deckRanks[i + 1] - deckRanks[i] != 1) {
       return false;
@@ -59,7 +68,7 @@ function checkStraight(decks) {
 }
 
 function checkThreeOfAKind(decks) {
-  var countMap = {}
+  var countMap = new Map();
 
   countPairs(countMap, decks)
 
@@ -76,17 +85,17 @@ function checkThreeOfAKind(decks) {
 
 function countPairs(countMap, decks) {
   decks.forEach(card => {
-    if (!countMap[card.rank]) {
+    if (!countMap.get(card.rank)) {
       countMap.set(card.rank, 1);
     } else {
-      count = countMap[card.rank];
+      var count = countMap.get(card.rank);
       countMap.set(card.rank, count + 1)
     }
   })
 }
 
 function checkPairs(decks) {
-  var countMap = {}
+  var countMap = new Map()
 
   countPairs(countMap, decks)
 
@@ -107,3 +116,15 @@ export function checkHighCard(decks) {
   });
 }
 
+
+var decks = [];
+
+//TODO: Remove
+initDeck();
+shuffleDeck();
+
+for (let i = 0; i < 5; i++) {
+  decks.push(returnOneCard())
+}
+
+console.log(calculateHand(decks))

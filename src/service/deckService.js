@@ -3,7 +3,6 @@ import Card from '../entities/card.js'
 import SUIT from '../entities/suit.js'
 import RANK from '../entities/rank.js'
 
-import random from 'random'
 
 import arrayShuffle from 'array-shuffle'
 
@@ -11,12 +10,7 @@ var deck = [];    //To hold the deck
 
 var deckInit = false;
 
-function initDeck() {
-
-  //Initialises the deck
-  //
-
-  console.log(SUIT.enums)
+export function initDeck() {
 
   const suits = SUIT.enums;
   const ranks = RANK.enums;
@@ -30,7 +24,7 @@ function initDeck() {
   //console.log(deck)
 }
 
-function shuffleDeck() {
+export function shuffleDeck() {
   if (deckInit) {
     for (let i = 0; i < 100; i++) {
       deck = arrayShuffle(deck)
@@ -38,19 +32,10 @@ function shuffleDeck() {
   }
 }
 
-function returnOneCard() {
+export function returnOneCard() {
   return deck.pop()
 }
 
 
 
-initDeck();
-
-console.log("Initial deck: " + JSON.stringify(deck));
-
-console.log("Length: " + deck.length)
-
-shuffleDeck();
-
-console.log(deck)
 
