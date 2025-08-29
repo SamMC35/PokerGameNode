@@ -20,6 +20,7 @@
     "array-shuffle": "^3.0.0",
     "enum": "^3.0.4",
     "express": "^5.1.0",
+    "fast-sort": "^3.4.1",
     "random": "^5.4.1"
   }
 }
