@@ -1,24 +1,43 @@
-import Card from '../entities/card.js'
-import SUIT from '../entities/suit.js'
 import RANK from '../entities/rank.js'
 import HAND from '../entities/hand.js'
 
 import { sort } from 'fast-sort';
 
 export function calculateHand(decks) {
-  //Check royal flush 
+  var deckRanks = decks.map((item) => {
+    item.rank
+  })
+
+  deckRanks = sort(deckRanks).asc();
+
+  //Check straight flush & royal flush
+
+  if (checkStraight(decks) && checkFlush(decks)) {
+    if (deckRanks[0] == RANK.TEN) {
+      return HAND.ROYAL_FLUSH;
+    } else {
+      return HAND.STRAIGHT_FLUSH;
+    }
+  }
+
+  //Check flush 
+  if (checkFlush(decks)) {
+    return HAND.FLUSH;
+  }
 
   //check straight 
   if (checkStraight(decks)) {
-
+    return HAND.STRAIGHT;
   }
   //Check three of a kind 
   if (checkThreeOfAKind(decks)) {
     return HAND.THREE_OF_A_KIND;
   }
 
+
   //Check pair 
   var pairs = checkPairs(decks)
+
   if (pairs == 2) {
     return HAND.TWO_PAIR;
   } else if (pairs == 1) {
@@ -30,6 +49,13 @@ export function calculateHand(decks) {
 
 function checkStraight(decks) {
 
+  for (let i = 0; i < deckRanks.length - 1; i++) {
+    if (deckRanks[i + 1] - deckRanks[i] != 1) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 function checkThreeOfAKind(decks) {
