@@ -4,3 +4,5 @@ class Client {
     this.password = password;
   }
 }
+
+export default Client;
