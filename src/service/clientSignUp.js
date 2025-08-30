@@ -43,7 +43,7 @@ async function init() {
 }
 
 
-function login(client) {
+export function login(client) {
   //Add login and name to database
   console.log(client)
 
@@ -72,5 +72,4 @@ async function hashPassword(text) {
 db = await init();
 
 
-login(new Client('Sam', 'eft4tfr4t4'));
-retrieveClientByName('Sam')
+
