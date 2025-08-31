@@ -4,7 +4,7 @@ import RANK from './entities/rank.js'
 import path from "path"
 import { fileURLToPath } from 'url'
 
-import { addPlayer, returnPlayerList, getPlayerByName } from './service/pokerService.js'
+import { addPlayer, returnPlayerList, getPlayerByName } from './service/playerService.js'
 import { login } from './service/clientSignUp.js'
 
 const __filename = fileURLToPath(import.meta.url)

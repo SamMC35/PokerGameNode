@@ -2,6 +2,8 @@ import Player from '../entities/player.js'
 
 import { addToNotificationQueue } from './notificationService.js'
 
+import arrayShuffle from 'array-shuffle'
+
 import INPUTTYPE from '../entities/input.js'
 
 var players = []
@@ -30,12 +32,17 @@ export function resetPlayers() {
 }
 
 function setDealer() {
-  //Set current player 
+  //Set current player
+
+  players = arrayShuffle(players)
+  currentPlayer = players[0];
+}
+
+export function getCurrentPlayer() {
+  return currentPlayer
 }
 
 export function processInput(input) {
-
-  //TODO: Add notification service
 
   var player = getPlayerByName(input.name)
 
