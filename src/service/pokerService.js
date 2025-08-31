@@ -1,17 +1,21 @@
-import Player from '../entities/player.js'
 
-var players = []
+var pot;
 
+var tableCards = []
 
-export function addPlayer(client) {
-  var player = new Player(client.name, 1500)
-  players.push(player)
+export function resetTable() {
+  pot = 0
+  tableCards = []
 }
 
-export function returnPlayerList() {
-  return players;
+export function getTableInfo(){
+   return {
+    ""
+  }
 }
 
-export function getPlayerByName(name) {
-  return players.find((player) => player.name == name)
+export function processInput(input) {
+
 }
+
+

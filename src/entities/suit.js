@@ -1,4 +1,4 @@
-import Enum from 'Enum'
+import Enum from 'enum'
 
 const SUIT = new Enum({
   'CLUBS': 'Clubs',
