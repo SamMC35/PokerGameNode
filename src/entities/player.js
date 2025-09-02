@@ -16,6 +16,10 @@ class Player {
     this.cards = [];
     this.state = PLAYER_STATE.WAITING
   }
+
+  switchState(state) {
+    this.state = state;
+  }
 }
 
-export default { Player, PLAYER_STATE };
+export { Player, PLAYER_STATE };
