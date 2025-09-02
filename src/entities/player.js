@@ -19,4 +19,4 @@ class Player {
   }
 }
 
-export default Player;
+export default { Player, PLAYER_STATE };

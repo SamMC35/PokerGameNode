@@ -40,5 +40,7 @@ export function isTableInitiated() {
 }
 
 export function processTable() {
+  // process players
+
 
 }

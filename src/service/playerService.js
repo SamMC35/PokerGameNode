@@ -1,4 +1,4 @@
-import Player from '../entities/player.js'
+import { Player, PLAYER_STATE } from '../entities/player.js'
 
 import { addToNotificationQueue } from './notificationService.js'
 
@@ -57,4 +57,9 @@ export function processInput(input) {
     default:
       console.error("invalid input INPUT TYPE: " + input.inputType)
   }
+}
+
+
+export function canProceed() {
+  players.filter(player => player.state != PLAYER_STATE.FOLDED).matchAll()
 }
