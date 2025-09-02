@@ -47,9 +47,9 @@ export function login(client) {
   //Add login and name to database
   console.log(client)
 
-  var password = sha256(client.password)
+  //var password = sha256(client.password)
 
-  console.log(password)
+  //console.log(client.password)
 
   insertStmt.run(client.name, client.password, function (err) {
     console.log("Inserted: " + this.lastID);

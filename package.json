@@ -25,6 +25,7 @@
     "fast-sort": "^3.4.1",
     "random": "^5.4.1",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "tailwind": "^4.0.0"
   }
 }
