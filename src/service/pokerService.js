@@ -41,5 +41,10 @@ export function isTableInitiated() {
 
 export function processTable() {
   // process players
+}
 
+function checkTableState(){
+  //Check if only one player exists
+
+  if()
 }

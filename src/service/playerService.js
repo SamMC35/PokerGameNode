@@ -61,7 +61,10 @@ export function processInput(input) {
 
 
 export function canSwitchState() {
-
   return players.filter(player => player.state != PLAYER_STATE.FOLDED)
     .matchAll(player => player.state != PLAYER_STATE.WAITING)
+}
+
+export function ifSolePlayerExist(){
+  return players.filter(player => player.state != PLAYER_STATE.FOLDED).length == 1 ? true : false; 
 }
