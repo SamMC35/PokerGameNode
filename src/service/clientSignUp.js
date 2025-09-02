@@ -10,6 +10,7 @@ let db;
 
 let insertStmt;
 let searchByNameStmt;
+let getAllStmt;
 
 
 async function init() {
@@ -36,6 +37,10 @@ async function init() {
           SELECT * FROM users WHERE name = ?
         `);
 
+        getAllStmt = db.prepare(`
+          SELECT * from users
+        `);
+
         resolve(db);
       });
     });
@@ -55,6 +60,17 @@ export function login(client) {
     console.log("Inserted: " + this.lastID);
   });
 
+}
+
+export function getClients() {
+  var clients = []
+  getAllStmt.run((err, row) => {
+    if (err) throw err;
+
+    clients.push(row)
+  })
+
+  return clients;
 }
 
 function retrieveClientByName(name) {

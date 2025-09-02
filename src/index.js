@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 
 import { addPlayer, returnPlayerList, getPlayerByName } from './service/playerService.js'
 import { login } from './service/clientSignUp.js'
+import { resetTable, isTableInitiated } from './service/pokerService.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -24,7 +25,6 @@ app.post("/addPlayers", (req, res) => {
 
   console.log('Data:', JSON.stringify(reqJson))
   addPlayer(reqJson)
-  login(reqJson)
   res.json({ message: "Data received" })
 })
 
@@ -36,6 +36,17 @@ app.get("/getPlayerByName", (req, res) => {
   var playerName = req.body.name
 
   res.json(getPlayerByName(playerName))
+})
+
+//Get has game started 
+app.get("/hasGameStarted", (req, res) => {
+  res.json(isTableInitiated())
+})
+
+//Initiate table 
+app.get("/startGame", (req, res) => {
+  resetTable();
+
 })
 
 app.listen(8080, () => {

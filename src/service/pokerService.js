@@ -1,3 +1,4 @@
+import TableState from "../entities/tableState";
 
 var pot;
 
@@ -5,17 +6,24 @@ var tableCards = []
 
 var lastBet;
 
+var tableInitiated = false;
+
+var tableState;
+
 export function resetTable() {
   pot = 0
   tableCards = []
   lastBet = 0
+  tableState = TableState.PRE_FLOP
+  tableInitiated = true;
 }
 
 export function getTableInfo() {
   return {
     "pot": pot,
     "tableCards": tableCards,
-    "lastBet": lastBet
+    "lastBet": lastBet,
+    "tableState": tableState
   }
 }
 
@@ -27,4 +35,10 @@ export function addPot(input) {
   }
 }
 
+export function isTableInitiated() {
+  return { tableInitiated: tableInitiated };
+}
 
+export function processTable() {
+
+}

@@ -1,4 +1,5 @@
 ## Things to do 
 
-[] Process player screen
+[x] Table generation
+[x] Check if game has started
 [] 
