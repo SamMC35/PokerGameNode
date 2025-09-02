@@ -1,7 +1,6 @@
 import Enum from "enum";
 
 const PLAYER_STATE = new Enum({
-  'LOGGED_IN': "loggedIn",
   'WAITING': "waiting",
   'CALLED': "calling",
   'FOLDED': "folding",
@@ -15,7 +14,7 @@ class Player {
     this.name = name;
     this.wallet = wallet;
     this.cards = [];
-    this.state = PLAYER_STATE.LOGGED_IN
+    this.state = PLAYER_STATE.WAITING
   }
 }
 

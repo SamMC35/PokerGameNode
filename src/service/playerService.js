@@ -60,6 +60,8 @@ export function processInput(input) {
 }
 
 
-export function canProceed() {
-  players.filter(player => player.state != PLAYER_STATE.FOLDED).matchAll()
+export function canSwitchState() {
+
+  return players.filter(player => player.state != PLAYER_STATE.FOLDED)
+    .matchAll(player => player.state != PLAYER_STATE.WAITING)
 }
