@@ -10,7 +10,8 @@ const PLAYER_STATE = new Enum({
 
 
 class Player {
-  constructor(name, wallet) {
+  constructor(id, name, wallet) {
+    this.id = id
     this.name = name;
     this.wallet = wallet;
     this.cards = [];

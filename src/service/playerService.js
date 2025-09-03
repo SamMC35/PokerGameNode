@@ -14,8 +14,12 @@ var checkForRaise = []
 
 let currentPlayer
 
+let dealerIndex;
+
+var id = 0
+
 export function addPlayer(client) {
-  var player = new Player(client.name, 1500)
+  var player = new Player(id++, client.name, 1500)
   players.push(player)
 }
 
@@ -27,32 +31,42 @@ export function getPlayerByName(name) {
   return players.find((player) => player.name == name)
 }
 
+export function shufflePlayers() {
+  players = arrayShuffle(players)
+}
+
 export function resetPlayers() {
-  currentPlayers = []
+  currentPlayers = players
 }
 
 function setDealer() {
   //Set current player
-
-  players = arrayShuffle(players)
-  currentPlayer = players[0];
+  currentPlayer = currentPlayers[++dealerIndex];
 }
 
 export function getCurrentPlayer() {
   return currentPlayer
 }
 
+export function getPlayerById(id) {
+  return players.find((player) => player.id == id)
+}
+
 export function processInput(input) {
 
-  var player = getPlayerByName(input.name)
+  var player = getPlayerById(input.id)
 
   switch (input.inputType) {
     case "called":
-      currentPlayers.push(player)
-      addToNotificationQueue(input.name + " has called $" + input.value)
+      player.state = PLAYER_STATE.CALLED
+      addToNotificationQueue(player.name + " has called $" + input.value)
       break
     case "folded":
-      addToNotificationQueue(input.name + " has folded")
+      player.state = PLAYER_STATE.FOLDED
+      currentPlayers.splice(currentPlayer, 1)
+      addToNotificationQueue(player.name + " has folded")
+      break;
+    case "raised":
       break;
     default:
       console.error("invalid input INPUT TYPE: " + input.inputType)

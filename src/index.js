@@ -4,7 +4,7 @@ import RANK from './entities/rank.js'
 import path from "path"
 import { fileURLToPath } from 'url'
 
-import { addPlayer, returnPlayerList, getPlayerByName } from './service/playerService.js'
+import { addPlayer, returnPlayerList, getPlayerByName, getPlayerById } from './service/playerService.js'
 import { login } from './service/clientSignUp.js'
 import { resetTable, isTableInitiated } from './service/pokerService.js'
 
@@ -47,6 +47,12 @@ app.get("/hasGameStarted", (req, res) => {
 app.get("/startGame", (req, res) => {
   resetTable();
 
+})
+
+app.get("/getPlayer/:id", (req, res) => {
+  const userId = req.params.id
+
+  res.json(getPlayerById(userId))
 })
 
 app.listen(8080, () => {
