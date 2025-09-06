@@ -1,5 +1,6 @@
 import TableState from "../entities/tableState";
 
+import { ifSolePlayerExist, canSwitchState } from "./playerService";
 var pot;
 
 var tableCards = []
@@ -43,8 +44,36 @@ export function processTable() {
   // process players
 }
 
-function checkTableState(){
+function switchTableState() {
+  switch (tableState) {
+    case TableState.PRE_FLOP:
+      tableState = TableState.FLOP;
+      break;
+    case TableState.FLOP:
+      tableState = TableState.TURN
+      break;
+    case TableState.TURN:
+      tableState = TableState.RIVER
+    case TableState.RIVER:
+      tableState = TableState.SHOWDOWN;
+    case TableState.SHOWDOWN:
+      tableState = TableState.PRE_FLOP;
+      break;
+    default:
+      console.error("Invalid tableState:" + tableState);
+      break;
+  }
+}
+
+function checkTableState() {
   //Check if only one player exists
 
-  if()
+  if (canSwitchState()) {
+    switchTableState();
+  }
+
+  if (ifSolePlayerExist()) {
+    moveToShowdown();
+  }
+
 }

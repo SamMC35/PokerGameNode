@@ -3,6 +3,10 @@ class Card {
     this.suit = suit;
     this.rank = rank;
   }
+
+  toString() {
+    return `${this.rank} of ${this.suit}`;
+  }
 }
 
 export default Card;

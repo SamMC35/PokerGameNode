@@ -1,9 +1,9 @@
-import Card from '../entities/card.js';
-import SUIT from '../entities/suit.js';
+
+
 import RANK from '../entities/rank.js'
 import HAND from '../entities/hand.js'
 
-import { initDeck, shuffleDeck, returnOneCard } from './deckService.js';
+
 
 import { sort } from 'fast-sort';
 
@@ -13,18 +13,25 @@ export function calculateHand(decks) {
     log.error("Not 5");
     return;
   }
-  if (checkStraight(decks)/* && checkFlush(decks)*/) {
-    /*if (deckRanks[0] == RANK.TEN) {
+  if (checkStraight(decks) && checkFlush(decks)) {
+
+    var deckRanks = decks.map((item) => {
+      item.rank.key
+    })
+
+    deckRanks = sort(deckRanks).asc();
+
+    if (deckRanks[0] == RANK.TEN) {
       return HAND.ROYAL_FLUSH;
-    } else {*/
-    return HAND.STRAIGHT_FLUSH;
-    //}
+    } else {
+      return HAND.STRAIGHT_FLUSH;
+    }
   }
 
   //Check flush 
-  /*if (checkFlush(decks)) {
+  if (checkFlush(decks)) {
     return HAND.FLUSH;
-  }*/
+  }
 
   //check straight 
   if (checkStraight(decks)) {
@@ -47,6 +54,18 @@ export function calculateHand(decks) {
 
   return HAND.HIGH_CARD;
 }
+function checkFlush(decks) {
+  console.log("Decks: " + decks)
+  var deckSuits = decks.map((item) => {
+    item.suit
+  })
+
+  var checkForSuit = deckSuits[0]
+
+  console.log("CheckForSuit: " + checkForSuit)
+  console.log("DeckSuits: " + deckSuits)
+  return deckSuits.every((item) => { item === checkForSuit })
+}
 
 function checkStraight(decks) {
 
@@ -56,13 +75,13 @@ function checkStraight(decks) {
 
   deckRanks = sort(deckRanks).asc();
 
-
-
+  console.log("DeckRanks: " + deckRanks)
   for (let i = 0; i < deckRanks.length - 1; i++) {
     if (deckRanks[i + 1] - deckRanks[i] != 1) {
       return false;
     }
   }
+
 
   return true;
 }
@@ -74,8 +93,8 @@ function checkThreeOfAKind(decks) {
 
   var threeOfAKind = 0
 
-  countMap.forEach((entry) => {
-    if (entry.value == 3) {
+  countMap.forEach((value, key) => {
+    if (value == 3) {
       threeOfAKind += 1;
     }
   })
@@ -101,11 +120,13 @@ function checkPairs(decks) {
 
   var pairs = 0;
 
-  countMap.forEach((entry) => {
-    if (entry.value == 2) {
+  countMap.forEach((value, key) => {
+    if (value == 2) {
       pairs += 1;
     }
   })
+
+  console.log("countMap:", countMap)
 
   return pairs;
 }
@@ -117,14 +138,3 @@ export function checkHighCard(decks) {
 }
 
 
-var decks = [];
-
-//TODO: Remove
-initDeck();
-shuffleDeck();
-
-for (let i = 0; i < 5; i++) {
-  decks.push(returnOneCard())
-}
-
-console.log(calculateHand(decks))
