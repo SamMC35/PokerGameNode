@@ -89,13 +89,19 @@ function checkForFlush() {
 
 }
 
+function checkForStraightFlush(){
+  
+}
+
+function checkForRoyalFlush()
+
 function test() {
-  checkForHighCard()
-  checkForOnePair()
-  checkForTwoPair()
-  checkForThreeCard()
+  //checkForHighCard()
+  //checkForOnePair()
+  //checkForTwoPair()
+  //checkForThreeCard()
   checkForStraight()
-  checkForFlush()
+//  checkForFlush()
 }
 
 test()

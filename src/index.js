@@ -5,7 +5,7 @@ import path from "path"
 import { fileURLToPath } from 'url'
 
 import { addPlayer, returnPlayerList, getPlayerByName, getPlayerById } from './service/playerService.js'
-import { login } from './service/clientSignUp.js'
+
 import { resetTable, isTableInitiated } from './service/pokerService.js'
 
 const __filename = fileURLToPath(import.meta.url)

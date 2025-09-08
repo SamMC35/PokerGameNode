@@ -7,6 +7,14 @@ class Card {
   toString() {
     return `${this.rank} of ${this.suit}`;
   }
+
+  getRank() {
+    return this.rank;
+  }
+
+  getSuit() {
+    return this.suit;
+  }
 }
 
 export default Card;

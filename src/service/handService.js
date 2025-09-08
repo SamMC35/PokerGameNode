@@ -55,22 +55,30 @@ export function calculateHand(decks) {
   return HAND.HIGH_CARD;
 }
 function checkFlush(decks) {
-  console.log("Decks: " + decks)
+//  console.log("Decks for flush: " + decks)
   var deckSuits = decks.map((item) => {
-    item.suit
+    console.log(item.getSuit())
+    return item.getSuit().key
   })
 
   var checkForSuit = deckSuits[0]
 
-  console.log("CheckForSuit: " + checkForSuit)
-  console.log("DeckSuits: " + deckSuits)
-  return deckSuits.every((item) => { item === checkForSuit })
+  //console.log("CheckForSuit: " + checkForSuit)
+  //console.log("DeckSuitsForFlush: " + deckSuits)
+  var isFlush = deckSuits.every((item) => { return item === checkForSuit })
+
+//  console.log(checkForSuit === deckSuits[0])
+
+  return isFlush;
 }
 
 function checkStraight(decks) {
 
+  console.log("Decks: " + decks)
+
   var deckRanks = decks.map((item) => {
-    item.rank
+    console.log("Item: " + item.rank)
+    return item.getRank().value
   })
 
   deckRanks = sort(deckRanks).asc();
@@ -81,8 +89,6 @@ function checkStraight(decks) {
       return false;
     }
   }
-
-
   return true;
 }
 

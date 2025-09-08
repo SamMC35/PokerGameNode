@@ -1,6 +1,6 @@
-import TableState from "../entities/tableState";
+import TableState from "../entities/tableState.js";
 
-import { ifSolePlayerExist, canSwitchState } from "./playerService";
+import { ifSolePlayerExist, canSwitchState } from "./playerService.js";
 var pot;
 
 var tableCards = []
