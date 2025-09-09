@@ -37,5 +37,23 @@ export function returnOneCard() {
 }
 
 
+export function generateCombinations(cardList) {
+  const finalList = [];
+  gatherAllCombos(cardList, [], finalList, 0);
+  return finalList;
+}
+
+function gatherAllCombos(cardList, dummyList, finalList, start) {
+  if (dummyList.length === 3) {
+    finalList.push([...dummyList]);
+    return;
+  }
+
+  for (let i = start; i < cardList.length; i++) {
+    dummyList.push(cardList[i]);
+    gatherAllCombos(cardList, dummyList, finalList, i + 1, 3);
+    dummyList.pop();
+  }
+}
 
 

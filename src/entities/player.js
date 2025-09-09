@@ -1,4 +1,5 @@
 import Enum from "enum";
+import HAND from "./hand";
 
 const PLAYER_STATE = new Enum({
   'WAITING': "waiting",
@@ -16,10 +17,19 @@ class Player {
     this.wallet = wallet;
     this.cards = [];
     this.state = PLAYER_STATE.WAITING
+    this.hand = HAND.HIGH_CARD;
   }
 
   switchState(state) {
     this.state = state;
+  }
+
+  setHand(hand) {
+    this.hand = hand
+  }
+
+  setCards(cards) {
+    this.cards = cards
   }
 }
 

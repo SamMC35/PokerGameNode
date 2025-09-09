@@ -18,4 +18,15 @@ function testSolePlayer() {
   console.log(ifSolePlayerExist())
 
 }
+
+function testWinner() {
+  const playerNames = ["Sam", "Mas"]
+
+  for (let i = 0; i < playerNames.length; i++) {
+    addPlayer(new Client(i, playerNames[i]))
+  }
+
+
+}
+
 testSolePlayer()

@@ -16,12 +16,17 @@ export function calculateHand(decks) {
   if (checkStraight(decks) && checkFlush(decks)) {
 
     var deckRanks = decks.map((item) => {
-      item.rank.key
+      return item.getRank().value
     })
 
     deckRanks = sort(deckRanks).asc();
 
-    if (deckRanks[0] == RANK.TEN) {
+    console.log("sorted deck:" + deckRanks)
+
+    console.log(deckRanks[0])
+    console.log(RANK.TEN.value)
+
+    if (deckRanks[0] === RANK.TEN.value) {
       return HAND.ROYAL_FLUSH;
     } else {
       return HAND.STRAIGHT_FLUSH;
@@ -55,7 +60,7 @@ export function calculateHand(decks) {
   return HAND.HIGH_CARD;
 }
 function checkFlush(decks) {
-//  console.log("Decks for flush: " + decks)
+  //  console.log("Decks for flush: " + decks)
   var deckSuits = decks.map((item) => {
     console.log(item.getSuit())
     return item.getSuit().key
@@ -67,7 +72,7 @@ function checkFlush(decks) {
   //console.log("DeckSuitsForFlush: " + deckSuits)
   var isFlush = deckSuits.every((item) => { return item === checkForSuit })
 
-//  console.log(checkForSuit === deckSuits[0])
+  //  console.log(checkForSuit === deckSuits[0])
 
   return isFlush;
 }

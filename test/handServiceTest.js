@@ -89,19 +89,46 @@ function checkForFlush() {
 
 }
 
-function checkForStraightFlush(){
-  
+function checkForStraightFlush() {
+  console.log("Checking for straight flush")
+
+  var decks = [
+    new Card(SUIT.CLUBS, RANK.SIX),
+    new Card(SUIT.CLUBS, RANK.SEVEN),
+    new Card(SUIT.CLUBS, RANK.EIGHT),
+    new Card(SUIT.CLUBS, RANK.NINE),
+    new Card(SUIT.CLUBS, RANK.TEN),
+  ]
+
+  console.log(calculateHand(decks))
 }
 
-function checkForRoyalFlush()
+function checkForRoyalFlush() {
+  console.log("Checking for royal flush")
+
+  var decks = [
+    new Card(SUIT.CLUBS, RANK.KING),
+    new Card(SUIT.CLUBS, RANK.JACK),
+    new Card(SUIT.CLUBS, RANK.QUEEN),
+    new Card(SUIT.CLUBS, RANK.TEN),
+    new Card(SUIT.CLUBS, RANK.ACE),
+  ]
+
+  console.log(calculateHand(decks))
+
+}
+
+//function checkForRoyalFlush()
 
 function test() {
-  //checkForHighCard()
-  //checkForOnePair()
-  //checkForTwoPair()
-  //checkForThreeCard()
+  checkForHighCard()
+  checkForOnePair()
+  checkForTwoPair()
+  checkForThreeCard()
   checkForStraight()
-//  checkForFlush()
+  checkForFlush()
+  checkForStraightFlush()
+  checkForRoyalFlush()
 }
 
 test()

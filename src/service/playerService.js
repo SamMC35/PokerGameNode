@@ -5,6 +5,9 @@ import { addToNotificationQueue } from './notificationService.js'
 import arrayShuffle from 'array-shuffle'
 
 import INPUTTYPE from '../entities/input.js'
+import HAND from '../entities/hand.js'
+import { generateCombinations } from './deckService.js'
+import { calculateHand } from './handService.js'
 
 var players = []
 
@@ -74,7 +77,37 @@ export function processInput(input) {
 }
 
 
+export function getWinner(communityCards) {
 
+  var allComCardCombos = generateCombinations(communityCards)
+
+  var playing = players.filter(player => player.state != PLAYER_STATE.FOLDED)
+
+  playing.forEach((player) => {
+    var highestHand = HAND.HIGH_CARD
+    var cards = [...players.cards]
+
+    for (const comCards of allComCardCombos) {
+      var cardSet = []
+      cardSet.push(cards)
+      cardSet.push(comCards)
+
+      var currentHand = calculateHand(decks)
+
+      if (currentHand.value > highestHand.value) {
+        highestHand = currentHand
+      }
+    }
+
+    player.setHand(highestHand)
+  })
+
+  const maxHandValue = Math.max(...playing.map(player => player.hand.value))
+
+  return playing.filter((player) => {
+    player.hand.value === maxHandValue
+  })
+}
 
 export function canSwitchState() {
   return players.filter(player => player.state != PLAYER_STATE.FOLDED)
