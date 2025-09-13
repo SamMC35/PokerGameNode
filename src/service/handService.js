@@ -10,7 +10,7 @@ import { sort } from 'fast-sort';
 export function calculateHand(decks) {
   //Check straight flush & royal flush
   if (decks.length != 5) {
-    log.error("Not 5");
+    console.error("Not 5");
     return;
   }
   if (checkStraight(decks) && checkFlush(decks)) {
@@ -63,13 +63,13 @@ function checkFlush(decks) {
   //  console.log("Decks for flush: " + decks)
   var deckSuits = decks.map((item) => {
     console.log(item.getSuit())
-    return item.getSuit().key
+    return item.getSuit()
   })
 
   var checkForSuit = deckSuits[0]
 
-  //console.log("CheckForSuit: " + checkForSuit)
-  //console.log("DeckSuitsForFlush: " + deckSuits)
+  console.log("CheckForSuit: " + checkForSuit)
+  console.log("DeckSuitsForFlush: " + deckSuits)
   var isFlush = deckSuits.every((item) => { return item === checkForSuit })
 
   //  console.log(checkForSuit === deckSuits[0])
@@ -79,7 +79,7 @@ function checkFlush(decks) {
 
 function checkStraight(decks) {
 
-  console.log("Decks: " + decks)
+  // console.log("Decks: " + decks)
 
   var deckRanks = decks.map((item) => {
     console.log("Item: " + item.rank)
@@ -88,7 +88,7 @@ function checkStraight(decks) {
 
   deckRanks = sort(deckRanks).asc();
 
-  console.log("DeckRanks: " + deckRanks)
+  // console.log("DeckRanks: " + deckRanks)
   for (let i = 0; i < deckRanks.length - 1; i++) {
     if (deckRanks[i + 1] - deckRanks[i] != 1) {
       return false;

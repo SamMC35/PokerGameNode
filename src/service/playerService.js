@@ -6,7 +6,7 @@ import arrayShuffle from 'array-shuffle'
 
 import INPUTTYPE from '../entities/input.js'
 import HAND from '../entities/hand.js'
-import { generateCombinations } from './deckService.js'
+import { generateCombinations, returnOneCard } from './deckService.js'
 import { calculateHand } from './handService.js'
 
 var players = []
@@ -26,7 +26,25 @@ export function addPlayer(client) {
   players.push(player)
 }
 
+export function distributeCards() {
+
+  console.log("Players while distributing: " + players)
+
+  players.forEach((player) => {
+    var tempCards = []
+
+    for (let i = 0; i < 2; i++) {
+      tempCards.push(returnOneCard());
+    }
+
+    console.log("Adding Cards: " + tempCards)
+
+    player.setCards(tempCards)
+  })
+}
+
 export function returnPlayerList() {
+  console.log("Players: " + players)
   return players;
 }
 
@@ -85,14 +103,15 @@ export function getWinner(communityCards) {
 
   playing.forEach((player) => {
     var highestHand = HAND.HIGH_CARD
-    var cards = [...players.cards]
+    var cards = [...player.getCards()]
 
     for (const comCards of allComCardCombos) {
-      var cardSet = []
-      cardSet.push(cards)
-      cardSet.push(comCards)
+      var cardSet = [...cards]
+      cardSet = cardSet.concat(comCards)
 
-      var currentHand = calculateHand(decks)
+      var currentHand = calculateHand(cardSet)
+
+      console.log(player.name + ": " + cardSet + " gets " + currentHand)
 
       if (currentHand.value > highestHand.value) {
         highestHand = currentHand
@@ -105,7 +124,7 @@ export function getWinner(communityCards) {
   const maxHandValue = Math.max(...playing.map(player => player.hand.value))
 
   return playing.filter((player) => {
-    player.hand.value === maxHandValue
+    return player.hand.value === maxHandValue
   })
 }
 

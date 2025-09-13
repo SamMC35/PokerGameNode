@@ -26,7 +26,7 @@ export function initDeck() {
 
 export function shuffleDeck() {
   if (deckInit) {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 9999; i++) {
       deck = arrayShuffle(deck)
     }
   }

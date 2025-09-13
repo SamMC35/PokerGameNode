@@ -1,5 +1,5 @@
 import Enum from "enum";
-import HAND from "./hand";
+import HAND from "./hand.js";
 
 const PLAYER_STATE = new Enum({
   'WAITING': "waiting",
@@ -24,12 +24,24 @@ class Player {
     this.state = state;
   }
 
+  getName(){
+    return this.name
+  }
+
   setHand(hand) {
     this.hand = hand
   }
 
   setCards(cards) {
     this.cards = cards
+  }
+
+  getCards(){
+    return this.cards;
+  }
+
+  toString() {
+    console.log("Player name: " + this.name)
   }
 }
 
