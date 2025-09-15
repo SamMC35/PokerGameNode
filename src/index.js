@@ -24,12 +24,17 @@ app.post("/addPlayers", (req, res) => {
   var reqJson = req.body;
 
   console.log('Data:', JSON.stringify(reqJson))
-  addPlayer(reqJson)
-  res.json({ message: "Data received" })
+  var idValue = addPlayer(reqJson)
+  console.log("IdVal: " + idValue)
+  res.json({ message: "Data received", id: idValue })
 })
 
 app.get("/getPlayers", (req, res) => {
   res.json(returnPlayerList())
+})
+
+app.get("/getPlayerById", (req, res) => {
+  res.json(getPlayerById(id))
 })
 
 app.get("/getPlayerByName", (req, res) => {
@@ -40,13 +45,14 @@ app.get("/getPlayerByName", (req, res) => {
 
 //Get has game started 
 app.get("/hasGameStarted", (req, res) => {
-  res.json(isTableInitiated())
+  var isInit = isTableInitiated()
+  res.json(isInit)
 })
 
 //Initiate table 
 app.get("/startGame", (req, res) => {
   resetTable();
-
+   res.status(200).send('OK');
 })
 
 app.get("/getPlayer/:id", (req, res) => {
@@ -55,6 +61,10 @@ app.get("/getPlayer/:id", (req, res) => {
   res.json(getPlayerById(userId))
 })
 
-app.listen(8080, () => {
+app.listen(8081, () => {
   console.log("listening");
 })
+
+process.on('uncaughtException', (err) => {
+  console.error('💥 Uncaught Exception:', err);
+});

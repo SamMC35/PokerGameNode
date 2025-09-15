@@ -24,6 +24,8 @@ var id = 0
 export function addPlayer(client) {
   var player = new Player(id++, client.name, 1500)
   players.push(player)
+
+  return id;
 }
 
 export function distributeCards() {
@@ -44,7 +46,7 @@ export function distributeCards() {
 }
 
 export function returnPlayerList() {
-  console.log("Players: " + players)
+  // console.log("Players: " + players)
   return players;
 }
 
@@ -127,6 +129,8 @@ export function getWinner(communityCards) {
     return player.hand.value === maxHandValue
   })
 }
+
+
 
 export function canSwitchState() {
   return players.filter(player => player.state != PLAYER_STATE.FOLDED)

@@ -7,11 +7,13 @@ async function addPlayer(event) {
 
   console.log("Inserting: " + name + "   " + password);
 
+  const json = JSON.stringify({ name, password });
+
   try {
-    const response = await fetch("http://localhost:8080/addPlayers", {
+    const response = await fetch("http://localhost:8081/addPlayers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, password })
+      body: json
     });
 
     if (response.ok) {
@@ -23,6 +25,14 @@ async function addPlayer(event) {
       // clear inputs
       document.getElementById("name").value = "";
       document.getElementById("password").value = "";
+
+      localStorage.setItem('playerJson', JSON.stringify(result))
+
+      console.log(localStorage.getItem('playerJson'))
+
+      window.location.href = "/waiting.html"
+
+      
     } else {
       showPopup("Failed to add player");
     }

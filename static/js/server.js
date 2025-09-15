@@ -1,6 +1,23 @@
+async function startGame(event){
+  console.log("Let's a go!!!!!!!");
+  event.preventDefault();
+
+  try{
+    const response = await fetch("http://localhost:8081/startGame", {
+      method: "GET" 
+    })
+
+
+    if(response.ok){
+      window.location.href = "/table.html"
+    }
+  } catch(err){
+    console.error("Error in pushing: " + err.message)
+  }
+}
 
 async function fetchData() {
-  const response = await fetch('http://localhost:8080/getPlayers')
+  const response = await fetch('http://localhost:8081/getPlayers')
 
   if (response.ok) {
     const data = await response.json();
