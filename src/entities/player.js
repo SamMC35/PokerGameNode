@@ -18,6 +18,7 @@ class Player {
     this.cards = [];
     this.state = PLAYER_STATE.WAITING
     this.hand = HAND.HIGH_CARD;
+    this.bet = 0;
   }
 
   switchState(state) {

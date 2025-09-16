@@ -8,6 +8,7 @@ import INPUTTYPE from '../entities/input.js'
 import HAND from '../entities/hand.js'
 import { generateCombinations, returnOneCard } from './deckService.js'
 import { calculateHand } from './handService.js'
+import { addPot, fetchLastBet, getTableInfo } from './pokerService.js'
 
 var players = []
 
@@ -21,6 +22,9 @@ let dealerIndex;
 
 var id = 0
 var playerSize = 0
+
+
+var dealerBet = 5;
 
 export function addPlayer(client) {
   var player = new Player(id++, client.name, 1500)
@@ -64,7 +68,13 @@ export function shufflePlayers() {
 export function resetPlayers() {
   currentPlayers = players
   setDealer()
+  currentPlayer.wallet = currentPlayer.wallet - dealerBet;
+  currentPlayer.bet = dealerBet;
+  addPot(dealerBet);
+  dealerIndex++
 }
+
+
 
 function setDealer() {
   //Set current player
@@ -114,9 +124,20 @@ function processInput(input) {
 
   var inputProcessed = true;
 
+  var lastBet = fetchLastBet()
+
+  // console.log(lastBet)
+  // console.log(player.bet)
+  // console.log(player.wallet)
+
   switch (input.inputType) {
     case INPUTTYPE.CALLING:
       player.state = PLAYER_STATE.CALLED
+      var bet = lastBet - player.bet
+      // console.log("Bet to be made: " + bet)
+      player.wallet = player.wallet - bet;
+      player.bet = lastBet
+      addPot(bet)
       addToNotificationQueue(player.name + " has called $" + input.value)
       break;
     case INPUTTYPE.FOLDING:
@@ -145,6 +166,8 @@ export function getWinner(communityCards) {
 
   var allComCardCombos = generateCombinations(communityCards)
 
+  var pot = getTableInfo().pot
+
   var playing = players.filter(player => player.state != PLAYER_STATE.FOLDED)
 
   playing.forEach((player) => {
@@ -169,9 +192,17 @@ export function getWinner(communityCards) {
 
   const maxHandValue = Math.max(...playing.map(player => player.hand.value))
 
-  return playing.filter((player) => {
+  var winners = playing.filter((player) => {
     return player.hand.value === maxHandValue
   })
+
+  console.log("Pot: ", pot)
+
+  winners.forEach((winner) => {winner.wallet = winner.wallet + Math.floor(pot/winners.length)})
+
+  console.log("Winners:" + JSON.stringify(winners))
+
+  return winners;
 }
 
 export function resetStates(){

@@ -34,9 +34,9 @@ function noRaiseTest() {
        
         players.forEach((player) => {
             console.log("Player: " + JSON.stringify(player))
-            processPlayer({id: player.id, input: INPUTTYPE.CALLING})
+            processPlayer({id: player.id, inputType: INPUTTYPE.CALLING})
         })
-    } while(table.tableState != TableState.SHOWDOWN);
+    } while(table.tableState != TableState.FLOP);
 
     var tableCardsForWinner = []
 
@@ -48,7 +48,7 @@ function noRaiseTest() {
 
     console.log("Table Cards: " + table.tableCards)
 
-    console.log("Winner:" + JSON.stringify(getWinner(table.tableCards)))
+    getWinner(table.tableCards)
     
    
 }

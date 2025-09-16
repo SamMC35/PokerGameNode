@@ -31,12 +31,19 @@ export function getTableInfo() {
   }
 }
 
-export function addPot(input) {
-  pot += input.value
+export function addPot(value) {
+  pot = pot + value
 
-  if (input.value > lastBet) {
-    lastBet = input.value
+  if (value > lastBet) {
+    lastBet = value
   }
+  console.log("Value: " + value + "  Pot: " + pot + "  Last Bet: " + lastBet)
+}
+
+
+
+export function fetchLastBet(){
+  return lastBet
 }
 
 export function isTableInitiated() {
