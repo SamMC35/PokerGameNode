@@ -32,7 +32,6 @@ async function addPlayer(event) {
 
       window.location.href = "/waiting.html"
 
-      
     } else {
       showPopup("Failed to add player");
     }

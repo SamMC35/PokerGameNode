@@ -6,7 +6,7 @@ function clearQueue() {
 }
 
 export function addToNotificationQueue(message) {
-  notificationQueue.add(message)
+  notificationQueue.push(message)
 }
 
 export function returnNotificationQueue() {

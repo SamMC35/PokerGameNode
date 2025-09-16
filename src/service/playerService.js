@@ -20,10 +20,13 @@ let currentPlayer
 let dealerIndex;
 
 var id = 0
+var playerSize = 0
 
 export function addPlayer(client) {
   var player = new Player(id++, client.name, 1500)
   players.push(player)
+
+  playerSize++;
 
   return id;
 }
@@ -60,11 +63,26 @@ export function shufflePlayers() {
 
 export function resetPlayers() {
   currentPlayers = players
+  setDealer()
 }
 
 function setDealer() {
   //Set current player
-  currentPlayer = currentPlayers[++dealerIndex];
+  currentPlayer = currentPlayers[0];
+  dealerIndex = 0
+}
+
+function changeDealer(){
+  players.push(players.shift())
+}
+
+function switchPlayer(){
+  // currentPlayers.push(currentPlayers.shift())
+  dealerIndex++;
+  if(dealerIndex >= playerSize ){
+    dealerIndex = 0
+  }
+  currentPlayer = currentPlayers[dealerIndex]
 }
 
 export function getCurrentPlayer() {
@@ -75,29 +93,55 @@ export function getPlayerById(id) {
   return players.find((player) => player.id == id)
 }
 
-export function processInput(input) {
+export function processPlayer(input){
+
+  console.log("Input: ", input)
 
   var player = getPlayerById(input.id)
 
+  if(player.id != currentPlayer.id){
+    console.error("Not current player")
+    return;
+  }
+
+  if(processInput(input)){
+    switchPlayer()
+  }
+}
+
+function processInput(input) {
+  var player = getPlayerById(input.id)
+
+  var inputProcessed = true;
+
   switch (input.inputType) {
-    case "called":
+    case INPUTTYPE.CALLING:
       player.state = PLAYER_STATE.CALLED
       addToNotificationQueue(player.name + " has called $" + input.value)
-      break
-    case "folded":
+      break;
+    case INPUTTYPE.FOLDING:
       player.state = PLAYER_STATE.FOLDED
-      currentPlayers.splice(currentPlayer, 1)
       addToNotificationQueue(player.name + " has folded")
       break;
-    case "raised":
+    case INPUTTYPE.RAISING:
+      break;
+    case INPUTTYPE.CHECKING:
+      player.state = PLAYER_STATE.CALLED
+      addToNotificationQueue(player.name + " has checked")
       break;
     default:
       console.error("invalid input INPUT TYPE: " + input.inputType)
+      return false;
   }
+
+  console.log("Input processed")
+  return true;
 }
 
 
 export function getWinner(communityCards) {
+
+  console.log("Checking for winner")
 
   var allComCardCombos = generateCombinations(communityCards)
 
@@ -113,7 +157,7 @@ export function getWinner(communityCards) {
 
       var currentHand = calculateHand(cardSet)
 
-      console.log(player.name + ": " + cardSet + " gets " + currentHand)
+      // console.log(player.name + ": " + cardSet + " gets " + currentHand)
 
       if (currentHand.value > highestHand.value) {
         highestHand = currentHand
@@ -130,11 +174,16 @@ export function getWinner(communityCards) {
   })
 }
 
-
+export function resetStates(){
+  players.filter(player => player.state !== PLAYER_STATE.FOLDED).forEach(player => player.state = PLAYER_STATE.WAITING)
+}
 
 export function canSwitchState() {
-  return players.filter(player => player.state != PLAYER_STATE.FOLDED)
-    .matchAll(player => player.state != PLAYER_STATE.WAITING)
+  return players.some(player =>
+  player.state !== PLAYER_STATE.FOLDED &&
+  player.state !== PLAYER_STATE.WAITING
+);
+
 }
 
 export function ifSolePlayerExist() {

@@ -4,9 +4,9 @@ import RANK from './entities/rank.js'
 import path from "path"
 import { fileURLToPath } from 'url'
 
-import { addPlayer, returnPlayerList, getPlayerByName, getPlayerById } from './service/playerService.js'
+import { addPlayer, returnPlayerList, getPlayerByName, getPlayerById, resetPlayers, processPlayer } from './service/playerService.js'
 
-import { resetTable, isTableInitiated } from './service/pokerService.js'
+import { resetTable, isTableInitiated, getTableInfo, processTable } from './service/pokerService.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -33,9 +33,6 @@ app.get("/getPlayers", (req, res) => {
   res.json(returnPlayerList())
 })
 
-app.get("/getPlayerById", (req, res) => {
-  res.json(getPlayerById(id))
-})
 
 app.get("/getPlayerByName", (req, res) => {
   var playerName = req.body.name
@@ -49,11 +46,27 @@ app.get("/hasGameStarted", (req, res) => {
   res.json(isInit)
 })
 
+app.get("/getTable", (req, res) => {
+  res.json(getTableInfo())
+})
+
 //Initiate table 
 app.get("/startGame", (req, res) => {
   resetTable();
+  resetPlayers();
    res.status(200).send('OK');
 })
+
+//Process Player Input
+app.post("/processInput", (req, res) => {
+  processPlayer(req.body.json)
+})
+
+//Process table
+app.post("/processTable", (req, res) => {
+  processTable()
+})
+
 
 app.get("/getPlayer/:id", (req, res) => {
   const userId = req.params.id

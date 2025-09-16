@@ -1,8 +1,9 @@
 import TableState from "../entities/tableState.js";
 
-import { ifSolePlayerExist, canSwitchState } from "./playerService.js";
+import { ifSolePlayerExist, canSwitchState, resetStates } from "./playerService.js";
 
 import { generateCombinations } from "./deckService.js";
+import { addToNotificationQueue } from "./notificationService.js";
 var pot;
 
 var tableCards = []
@@ -43,13 +44,15 @@ export function isTableInitiated() {
 }
 
 export function processTable() {
-  // process players
+  // process table
+  // stateWiseProcess()
+  checkTableState()
 }
 
 
 
-
 function switchTableState() {
+  var hasSwitched = true
   switch (tableState) {
     case TableState.PRE_FLOP:
       tableState = TableState.FLOP;
@@ -59,16 +62,30 @@ function switchTableState() {
       break;
     case TableState.TURN:
       tableState = TableState.RIVER
+      break
     case TableState.RIVER:
       tableState = TableState.SHOWDOWN;
+      break
     case TableState.SHOWDOWN:
       tableState = TableState.PRE_FLOP;
       break;
     default:
+      hasSwitched = false
       console.error("Invalid tableState:" + tableState);
       break;
   }
+
+  if(hasSwitched){
+    addToNotificationQueue("Table state has changed to: " + tableState)
+    resetStates()
+    console.log("Table state has changed to: " + tableState)
+  }
 }
+
+function moveToShowdown(){
+  tableState = TableState.SHOWDOWN
+}
+
 
 function checkTableState() {
   //Check if only one player exists

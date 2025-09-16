@@ -21,10 +21,10 @@ export function calculateHand(decks) {
 
     deckRanks = sort(deckRanks).asc();
 
-    console.log("sorted deck:" + deckRanks)
+    // console.log("sorted deck:" + deckRanks)
 
-    console.log(deckRanks[0])
-    console.log(RANK.TEN.value)
+    // console.log(deckRanks[0])
+    // console.log(RANK.TEN.value)
 
     if (deckRanks[0] === RANK.TEN.value) {
       return HAND.ROYAL_FLUSH;
@@ -62,14 +62,14 @@ export function calculateHand(decks) {
 function checkFlush(decks) {
   //  console.log("Decks for flush: " + decks)
   var deckSuits = decks.map((item) => {
-    console.log(item.getSuit())
+    // console.log(item.getSuit())
     return item.getSuit()
   })
 
   var checkForSuit = deckSuits[0]
 
-  console.log("CheckForSuit: " + checkForSuit)
-  console.log("DeckSuitsForFlush: " + deckSuits)
+  // console.log("CheckForSuit: " + checkForSuit)
+  // console.log("DeckSuitsForFlush: " + deckSuits)
   var isFlush = deckSuits.every((item) => { return item === checkForSuit })
 
   //  console.log(checkForSuit === deckSuits[0])
@@ -82,7 +82,7 @@ function checkStraight(decks) {
   // console.log("Decks: " + decks)
 
   var deckRanks = decks.map((item) => {
-    console.log("Item: " + item.rank)
+    // console.log("Item: " + item.rank)
     return item.getRank().value
   })
 
@@ -137,7 +137,7 @@ function checkPairs(decks) {
     }
   })
 
-  console.log("countMap:", countMap)
+  // console.log("countMap:", countMap)
 
   return pairs;
 }
