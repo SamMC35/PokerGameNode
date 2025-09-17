@@ -8,7 +8,7 @@ import INPUTTYPE from '../entities/input.js'
 import HAND from '../entities/hand.js'
 import { generateCombinations, returnOneCard } from './deckService.js'
 import { calculateHand } from './handService.js'
-import { addPot, fetchLastBet, getTableInfo } from './pokerService.js'
+import { addPot, fetchLastBet, getTableInfo, isTableInitiated } from './pokerService.js'
 
 var players = []
 
@@ -27,12 +27,12 @@ var playerSize = 0
 var dealerBet = 5;
 
 export function addPlayer(client) {
-  var player = new Player(id++, client.name, 1500)
+  var player = new Player(id, client.name, 1500)
   players.push(player)
 
   playerSize++;
 
-  return id;
+  return id++;
 }
 
 export function distributeCards() {
@@ -53,8 +53,18 @@ export function distributeCards() {
 }
 
 export function returnPlayerList() {
-  // console.log("Players: " + players)
-  return players;
+  var playerDTOList = [...players]
+  var tableInit = isTableInitiated()
+
+  if(tableInit.tableInitiated){
+    playerDTOList.forEach((player) => {
+      if(player.id === currentPlayer.id){
+        player.isCurrentPlayer = true
+      }
+    })
+  }
+  
+  return playerDTOList;
 }
 
 export function getPlayerByName(name) {
@@ -70,8 +80,13 @@ export function resetPlayers() {
   setDealer()
   currentPlayer.wallet = currentPlayer.wallet - dealerBet;
   currentPlayer.bet = dealerBet;
+  currentPlayer.state = PLAYER_STATE.CALLED
   addPot(dealerBet);
-  dealerIndex++
+  currentPlayer = currentPlayers[++dealerIndex]
+  
+
+  console.log("Dealer index: " + dealerIndex)
+  // console.log("Current Player list after resetting: " + JSON.stringify(currentPlayers))
 }
 
 
@@ -88,11 +103,13 @@ function changeDealer(){
 
 function switchPlayer(){
   // currentPlayers.push(currentPlayers.shift())
-  dealerIndex++;
+  dealerIndex = dealerIndex + 1;
   if(dealerIndex >= playerSize ){
     dealerIndex = 0
   }
   currentPlayer = currentPlayers[dealerIndex]
+
+  console.log("Current Player switched to : " + currentPlayer.name)
 }
 
 export function getCurrentPlayer() {
@@ -100,7 +117,9 @@ export function getCurrentPlayer() {
 }
 
 export function getPlayerById(id) {
-  return players.find((player) => player.id == id)
+  var result = players.find((player) => player.id == id)
+  // console.log("Result:" + result)
+  return result
 }
 
 export function processPlayer(input){
@@ -119,6 +138,10 @@ export function processPlayer(input){
   }
 }
 
+export function getCurrentPlayers(){
+  return currentPlayers;
+}
+
 function processInput(input) {
   var player = getPlayerById(input.id)
 
@@ -131,7 +154,7 @@ function processInput(input) {
   // console.log(player.wallet)
 
   switch (input.inputType) {
-    case INPUTTYPE.CALLING:
+    case "calling":
       player.state = PLAYER_STATE.CALLED
       var bet = lastBet - player.bet
       // console.log("Bet to be made: " + bet)
@@ -140,7 +163,7 @@ function processInput(input) {
       addPot(bet)
       addToNotificationQueue(player.name + " has called $" + input.value)
       break;
-    case INPUTTYPE.FOLDING:
+    case "folding":
       player.state = PLAYER_STATE.FOLDED
       addToNotificationQueue(player.name + " has folded")
       break;

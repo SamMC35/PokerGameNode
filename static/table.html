@@ -38,10 +38,26 @@
       </div>
     </div>
 
-    <!-- Bottom Panel -->
-    <div class="w-full bg-gray-700 text-white text-center py-4 rounded-lg shadow-lg">
-      Bottom Panel
-    </div>
+    <div class="overflow-x-auto">
+        <table id="data-table" class="min-w-full border border-gray-200 divide-y divide-gray-200 rounded-lg overflow-hidden">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                Name
+              </th>
+               <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                Wallet
+              </th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                Current Player
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white">
+            <!-- Data will be injected here -->
+          </tbody>
+        </table>
+      </div>
 
   </div>
 <script src="js/table.js"></script>

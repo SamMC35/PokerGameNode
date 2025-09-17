@@ -10,7 +10,8 @@ async function addPlayer(event) {
   const json = JSON.stringify({ name, password });
 
   try {
-    const response = await fetch("http://localhost:8081/addPlayers", {
+    const currentUrl = "http://" + window.location.hostname + ":" + window.location.port
+    const response = await fetch(currentUrl + "/addPlayers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: json

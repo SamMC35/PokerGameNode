@@ -6,13 +6,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Full-Height Poker Layout</title>
 </head>
-<body class="bg-green-800 min-h-screen flex flex-col">
+<body class="bg-white min-h-screen flex flex-col">
 
   <!-- Top Panels -->
   <div class="flex justify-between p-4 space-x-2">
     <div class="flex-1 bg-gray-700 text-white text-center py-4 rounded-lg shadow" id="playerWallet">
+      
     </div>
     <div class="flex-1 bg-gray-700 text-white text-center py-4 rounded-lg shadow" id ="playerName">
+      
     </div>
   </div>
 
@@ -33,10 +35,10 @@
 
   <!-- Action Buttons (Bottom, Big) -->
   <div class="grid grid-cols-2 gap-4 p-4">
-    <button class="bg-blue-600 text-white py-6 rounded-lg shadow hover:bg-blue-700 text-lg font-bold">Call</button>
-    <button class="bg-green-600 text-white py-6 rounded-lg shadow hover:bg-green-700 text-lg font-bold">Raise</button>
-    <button class="bg-red-600 text-white py-6 rounded-lg shadow hover:bg-red-700 text-lg font-bold">Fold</button>
-    <button class="bg-yellow-500 text-white py-6 rounded-lg shadow hover:bg-yellow-600 text-lg font-bold">All-In</button>
+    <button class="bg-blue-600 text-white py-6 rounded-lg shadow hover:bg-blue-700 text-lg font-bold" onclick="processInput('calling')">Call</button>
+    <button class="bg-blue-600 text-white py-6 rounded-lg shadow hover:bg-green-700 text-lg font-bold">Raise</button>
+    <button class="bg-blue-600 text-white py-6 rounded-lg shadow hover:bg-red-700 text-lg font-bold">Fold</button>
+    <button class="bg-blue-500 text-white py-6 rounded-lg shadow hover:bg-yellow-600 text-lg font-bold">All-In</button>
   </div>
 <script src="js/playerTerminal.js"></script>
 </body>

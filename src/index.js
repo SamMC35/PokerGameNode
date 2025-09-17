@@ -59,7 +59,7 @@ app.get("/startGame", (req, res) => {
 
 //Process Player Input
 app.post("/processInput", (req, res) => {
-  processPlayer(req.body.json)
+  processPlayer(req.body)
 })
 
 //Process table

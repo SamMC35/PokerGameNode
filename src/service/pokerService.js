@@ -1,6 +1,6 @@
 import TableState from "../entities/tableState.js";
 
-import { ifSolePlayerExist, canSwitchState, resetStates } from "./playerService.js";
+import { ifSolePlayerExist, canSwitchState, resetStates, returnPlayerList } from "./playerService.js";
 
 import { generateCombinations } from "./deckService.js";
 import { addToNotificationQueue } from "./notificationService.js";
@@ -27,7 +27,8 @@ export function getTableInfo() {
     "pot": pot,
     "tableCards": tableCards,
     "lastBet": lastBet,
-    "tableState": tableState
+    "tableState": tableState,
+    "playerList" : returnPlayerList()
   }
 }
 

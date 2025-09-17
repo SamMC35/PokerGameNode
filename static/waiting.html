@@ -52,7 +52,8 @@
   // Immediately-invoked async function
   (async () => {
     try {
-      const response = await fetch("http://localhost:8081/hasGameStarted", {
+      const currentUrl = "http://" + window.location.hostname + ":" + window.location.port
+      const response = await fetch(currentUrl + "/hasGameStarted", {
         method: "GET"
       });
 

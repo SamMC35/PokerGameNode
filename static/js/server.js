@@ -3,7 +3,8 @@ async function startGame(event){
   event.preventDefault();
 
   try{
-    const response = await fetch("http://localhost:8081/startGame", {
+    const currentUrl = "http://" + window.location.hostname + ":" + window.location.port
+    const response = await fetch(currentUrl + "/startGame", {
       method: "GET" 
     })
 
@@ -17,7 +18,8 @@ async function startGame(event){
 }
 
 async function fetchData() {
-  const response = await fetch('http://localhost:8081/getPlayers')
+  const currentUrl = "http://" + window.location.hostname + ":" + window.location.port
+  const response = await fetch(currentUrl + '/getPlayers')
 
   if (response.ok) {
     const data = await response.json();
