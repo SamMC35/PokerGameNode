@@ -159,15 +159,20 @@ function processInput(input) {
       var bet = lastBet - player.bet
       // console.log("Bet to be made: " + bet)
       player.wallet = player.wallet - bet;
-      player.bet = lastBet
+      player.bet = bet
       addPot(bet)
-      addToNotificationQueue(player.name + " has called $" + input.value)
+      addToNotificationQueue(player.name + " has called $" + bet)
       break;
     case "folding":
       player.state = PLAYER_STATE.FOLDED
       addToNotificationQueue(player.name + " has folded")
       break;
     case INPUTTYPE.RAISING:
+      var bet = (lastBet - player.bet) + input.raise
+      player.state = PLAYER_STATE.RAISED
+      player.wallet = player.wallet - bet
+      player.bet = bet
+      addToNotificationQueue(player.name + "  has raised $" + input.raise)
       break;
     case INPUTTYPE.CHECKING:
       player.state = PLAYER_STATE.CALLED
@@ -236,8 +241,12 @@ export function canSwitchState() {
   return players.some(player =>
   player.state !== PLAYER_STATE.FOLDED &&
   player.state !== PLAYER_STATE.WAITING
-);
+) && allHaveBetted();
+}
 
+export function allHaveBetted(){
+  var maxBet = Math.max(...players.map(player => player.bet))
+  return players.filter(player.state !== PLAYER_STATE.FOLDED && player.state !== PLAYER_STATE.WAITING).every(player => player.bet == maxBet);
 }
 
 export function ifSolePlayerExist() {

@@ -14,6 +14,8 @@ var tableInitiated = false;
 
 var tableState;
 
+var isNewStateProcessed = true;
+
 export function resetTable() {
   pot = 0
   tableCards = []
@@ -85,8 +87,22 @@ function switchTableState() {
 
   if(hasSwitched){
     addToNotificationQueue("Table state has changed to: " + tableState)
-    resetStates()
+    isNewStateProcessed = false
     console.log("Table state has changed to: " + tableState)
+  }
+}
+
+function processTable(){
+  if(!isNewStateProcessed){
+    switch(tableState){
+      case TableState.PRE_FLOP:
+        resetStates();
+        break;
+      case TableState.FLOP:
+        for()
+    }
+
+    isNewStateProcessed = true
   }
 }
 

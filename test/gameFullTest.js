@@ -105,4 +105,5 @@ function foldTest(){
     getWinner(table.tableCards)
 }
 
+
 foldTest()
